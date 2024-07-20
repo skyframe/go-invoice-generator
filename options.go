@@ -38,6 +38,7 @@ type Options struct {
 	GreyTextColor []int `default:"[82,82,82]" json:"grey_text_color,omitempty"`
 	GreyBgColor   []int `default:"[232,232,232]" json:"grey_bg_color,omitempty"`
 	DarkBgColor   []int `default:"[212,212,212]" json:"dark_bg_color,omitempty"`
+	HeaderBgColor []int `default:"[200,200,200]" json:"header_bg_color,omitempty"`
 
 	Font     string `default:"Helvetica"`
 	BoldFont string `default:"Helvetica"`

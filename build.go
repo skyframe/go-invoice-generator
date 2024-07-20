@@ -156,7 +156,7 @@ func (doc *Document) drawsTableTitles() {
 	doc.pdf.SetFont(doc.Options.BoldFont, "B", 8)
 
 	// Draw rec
-	doc.pdf.SetFillColor(doc.Options.GreyBgColor[0], doc.Options.GreyBgColor[1], doc.Options.GreyBgColor[2])
+	doc.pdf.SetFillColor(doc.Options.HeaderBgColor[0], doc.Options.HeaderBgColor[1], doc.Options.HeaderBgColor[2])
 	doc.pdf.Rect(10, doc.pdf.GetY(), 190, 6, "F")
 
 	// Name
