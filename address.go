@@ -19,16 +19,14 @@ func (a *Address) ToString() string {
 		addrString += a.Address2
 	}
 
+	if len(a.City) > 0 {
+		addrString += "\n"
+		addrString += a.City
+	}
+
 	if len(a.PostalCode) > 0 {
 		addrString += "\n"
 		addrString += a.PostalCode
-	} else {
-		addrString += "\n"
-	}
-
-	if len(a.City) > 0 {
-		addrString += " "
-		addrString += a.City
 	}
 
 	if len(a.Country) > 0 {
