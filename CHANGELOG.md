@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/skyframe/go-invoice-generator/compare/v0.3.0...v0.3.1) (2024-08-01)
+
+
+### Bug Fixes
+
+* use tax title instead of desc ([8d92bcc](https://github.com/skyframe/go-invoice-generator/commit/8d92bcc6f918e76efa93c6390c2349e88beba15b))
+
 ## [0.3.0](https://github.com/skyframe/go-invoice-generator/compare/v0.2.0...v0.3.0) (2024-08-01)
 
 
