@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/skyframe/go-invoice-generator/compare/v0.2.0...v0.3.0) (2024-08-01)
+
+
+### Features
+
+* Make the tax line item subsript optional ([034bca2](https://github.com/skyframe/go-invoice-generator/commit/034bca2c6b482d4d2ec5eba8438aa87def8aea30))
+
 ## [0.2.0](https://github.com/skyframe/go-invoice-generator/compare/v0.1.0...v0.2.0) (2024-07-20)
 
 
