@@ -43,5 +43,6 @@ type Options struct {
 	Font     string `default:"Helvetica"`
 	BoldFont string `default:"Helvetica"`
 
-	UnicodeTranslateFunc UnicodeTranslateFunc
+	UnicodeTranslateFunc  UnicodeTranslateFunc
+	TextItemsTaxSubscript bool
 }

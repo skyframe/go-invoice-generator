@@ -317,39 +317,53 @@ func (i *Item) appendColTo(options *Options, doc *Document) {
 		}
 
 		// tax title
-		// lastY := doc.pdf.GetY()
-		doc.pdf.CellFormat(
-			ItemColDiscountOffset-ItemColTaxOffset,
-			colHeight/2,
-			doc.encodeString(taxTitle),
-			"0",
-			0,
-			"LB",
-			false,
-			0,
-			"",
-		)
+		if options.TextItemsTaxSubscript {
+			// lastY := doc.pdf.GetY()
+			doc.pdf.CellFormat(
+				ItemColDiscountOffset-ItemColTaxOffset,
+				colHeight/2,
+				doc.encodeString(taxTitle),
+				"0",
+				0,
+				"LB",
+				false,
+				0,
+				"",
+			)
 
-		// tax desc
-		doc.pdf.SetXY(ItemColTaxOffset, baseY+(colHeight/2))
-		doc.pdf.SetFont(doc.Options.Font, "", SmallTextFontSize)
-		doc.pdf.SetTextColor(
-			doc.Options.GreyTextColor[0],
-			doc.Options.GreyTextColor[1],
-			doc.Options.GreyTextColor[2],
-		)
+			// tax desc
+			doc.pdf.SetXY(ItemColTaxOffset, baseY+(colHeight/2))
+			doc.pdf.SetFont(doc.Options.Font, "", SmallTextFontSize)
+			doc.pdf.SetTextColor(
+				doc.Options.GreyTextColor[0],
+				doc.Options.GreyTextColor[1],
+				doc.Options.GreyTextColor[2],
+			)
 
-		doc.pdf.CellFormat(
-			ItemColDiscountOffset-ItemColTaxOffset,
-			colHeight/2,
-			doc.encodeString(taxDesc),
-			"0",
-			0,
-			"LT",
-			false,
-			0,
-			"",
-		)
+			doc.pdf.CellFormat(
+				ItemColDiscountOffset-ItemColTaxOffset,
+				colHeight/2,
+				doc.encodeString(taxDesc),
+				"0",
+				0,
+				"LT",
+				false,
+				0,
+				"",
+			)
+		} else {
+			doc.pdf.CellFormat(
+				ItemColDiscountOffset-ItemColTaxOffset,
+				colHeight,
+				doc.encodeString(taxDesc),
+				"0",
+				0,
+				"",
+				false,
+				0,
+				"",
+			)
+		}
 
 		// reset font and y
 		doc.pdf.SetFont(doc.Options.Font, "", BaseTextFontSize)

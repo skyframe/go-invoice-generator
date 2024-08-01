@@ -18,14 +18,15 @@ func TestNewWithInvalidType(t *testing.T) {
 
 func TestNew(t *testing.T) {
 	doc, err := New(Invoice, &Options{
-		TextTypeInvoice:   "FACTURE",
-		TextRefTitle:      "Réàf.",
-		AutoPrint:         true,
-		BaseTextColor:     []int{6, 63, 156},
-		GreyTextColor:     []int{161, 96, 149},
-		GreyBgColor:       []int{171, 240, 129},
-		DarkBgColor:       []int{176, 12, 20},
-		CurrencyPrecision: 2,
+		TextTypeInvoice:       "FACTURE",
+		TextRefTitle:          "Réàf.",
+		AutoPrint:             true,
+		BaseTextColor:         []int{6, 63, 156},
+		GreyTextColor:         []int{161, 96, 149},
+		GreyBgColor:           []int{171, 240, 129},
+		DarkBgColor:           []int{176, 12, 20},
+		CurrencyPrecision:     2,
+		TextItemsTaxSubscript: false,
 	})
 
 	if err != nil {
