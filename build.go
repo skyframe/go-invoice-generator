@@ -1,12 +1,10 @@
 package generator
 
 import (
-	"bytes"
 	"fmt"
 	"time"
 
 	"github.com/go-pdf/fpdf"
-	"github.com/shopspring/decimal"
 )
 
 // Build pdf document from data provided
@@ -229,19 +227,19 @@ func (doc *Document) drawsTableTitles() {
 		"",
 	)
 
-	// Discount
-	doc.pdf.SetX(ItemColDiscountOffset)
-	doc.pdf.CellFormat(
-		ItemColTotalTTCOffset-ItemColDiscountOffset,
-		6,
-		doc.encodeString(doc.Options.TextItemsDiscountTitle),
-		"0",
-		0,
-		"",
-		false,
-		0,
-		"",
-	)
+	// // Discount
+	// doc.pdf.SetX(ItemColDiscountOffset)
+	// doc.pdf.CellFormat(
+	// 	ItemColTotalTTCOffset-ItemColDiscountOffset,
+	// 	6,
+	// 	doc.encodeString(doc.Options.TextItemsDiscountTitle),
+	// 	"0",
+	// 	0,
+	// 	"",
+	// 	false,
+	// 	0,
+	// 	"",
+	// )
 
 	// TOTAL TTC
 	doc.pdf.SetX(ItemColTotalTTCOffset)
@@ -256,6 +254,15 @@ func (doc *Document) drawsTableTitles() {
 		0,
 		"",
 	)
+
+	// Draw line
+	left, _, right, _ := doc.pdf.GetMargins()
+	width, _ := doc.pdf.GetPageSize()
+	doc.pdf.SetY(doc.pdf.GetY() + 6)
+	doc.pdf.MoveTo(left, doc.pdf.GetY())
+	doc.pdf.LineTo(width-right, doc.pdf.GetY())
+	doc.pdf.DrawPath("D")
+	doc.pdf.SetY(doc.pdf.GetY() - 6)
 }
 
 // appendItems to document
@@ -351,37 +358,37 @@ func (doc *Document) appendTotal() {
 		doc.pdf.Rect(120, doc.pdf.GetY(), 40, 15, "F")
 
 		// title
-		doc.pdf.CellFormat(38, 7.5, doc.encodeString(doc.Options.TextTotalDiscounted), "0", 0, "BR", false, 0, "")
+		doc.pdf.CellFormat(38, 10, doc.encodeString(doc.Options.TextTotalDiscounted), "0", 0, "BR", false, 0, "")
 
 		// description
-		doc.pdf.SetXY(120, baseY+7.5)
-		doc.pdf.SetFont(doc.Options.Font, "", BaseTextFontSize)
-		doc.pdf.SetTextColor(
-			doc.Options.GreyTextColor[0],
-			doc.Options.GreyTextColor[1],
-			doc.Options.GreyTextColor[2],
-		)
+		// doc.pdf.SetXY(120, baseY+7.5)
+		// doc.pdf.SetFont(doc.Options.Font, "", BaseTextFontSize)
+		// doc.pdf.SetTextColor(
+		// 	doc.Options.GreyTextColor[0],
+		// 	doc.Options.GreyTextColor[1],
+		// 	doc.Options.GreyTextColor[2],
+		// )
 
-		var descString bytes.Buffer
-		discountType, discountAmount := doc.Discount.getDiscount()
-		if discountType == DiscountTypePercent {
-			descString.WriteString("-")
-			descString.WriteString(discountAmount.String())
-			descString.WriteString(" % / -")
-			descString.WriteString(doc.ac.FormatMoneyDecimal(
-				doc.TotalWithoutTaxAndWithoutDocumentDiscount().Sub(doc.TotalWithoutTax())),
-			)
-		} else {
-			descString.WriteString("-")
-			descString.WriteString(doc.ac.FormatMoneyDecimal(discountAmount))
-			descString.WriteString(" / -")
-			descString.WriteString(
-				discountAmount.Mul(decimal.NewFromFloat(100)).Div(doc.TotalWithoutTaxAndWithoutDocumentDiscount()).StringFixed(2),
-			)
-			descString.WriteString(" %")
-		}
+		// var descString bytes.Buffer
+		// discountType, discountAmount := doc.Discount.getDiscount()
+		// if discountType == DiscountTypePercent {
+		// 	descString.WriteString("-")
+		// 	descString.WriteString(discountAmount.String())
+		// 	descString.WriteString(" % / -")
+		// 	descString.WriteString(doc.ac.FormatMoneyDecimal(
+		// 		doc.TotalWithoutTaxAndWithoutDocumentDiscount().Sub(doc.TotalWithoutTax())),
+		// 	)
+		// } else {
+		// 	descString.WriteString("-")
+		// 	descString.WriteString(doc.ac.FormatMoneyDecimal(discountAmount))
+		// 	descString.WriteString(" / -")
+		// 	descString.WriteString(
+		// 		discountAmount.Mul(decimal.NewFromFloat(100)).Div(doc.TotalWithoutTaxAndWithoutDocumentDiscount()).StringFixed(2),
+		// 	)
+		// 	descString.WriteString(" %")
+		// }
 
-		doc.pdf.CellFormat(38, 7.5, doc.encodeString(descString.String()), "0", 0, "TR", false, 0, "")
+		// doc.pdf.CellFormat(38, 7.5, doc.encodeString(descString.String()), "0", 0, "TR", false, 0, "")
 
 		doc.pdf.SetFont(doc.Options.Font, "", LargeTextFontSize)
 		doc.pdf.SetTextColor(
@@ -434,6 +441,7 @@ func (doc *Document) appendTotal() {
 	)
 
 	// Draw total with tax title
+	doc.pdf.SetFont(doc.Options.BoldFont, "B", 10)
 	doc.pdf.SetY(doc.pdf.GetY() + 10)
 	doc.pdf.SetX(120)
 	doc.pdf.SetFillColor(doc.Options.DarkBgColor[0], doc.Options.DarkBgColor[1], doc.Options.DarkBgColor[2])
@@ -455,6 +463,8 @@ func (doc *Document) appendTotal() {
 		0,
 		"",
 	)
+	doc.pdf.SetFont(doc.Options.Font, "", LargeTextFontSize)
+
 }
 
 // appendPaymentTerm to document
