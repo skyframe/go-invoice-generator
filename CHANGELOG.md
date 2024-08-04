@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.2](https://github.com/skyframe/go-invoice-generator/compare/v0.3.1...v0.3.2) (2024-08-04)
+
+
+### Bug Fixes
+
+* remove discount column ([3a3fcaf](https://github.com/skyframe/go-invoice-generator/commit/3a3fcafa7d3d00b5da68006040c96fde36eeee8a))
+
 ## [0.3.1](https://github.com/skyframe/go-invoice-generator/compare/v0.3.0...v0.3.1) (2024-08-01)
 
 
