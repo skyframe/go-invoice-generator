@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.3](https://github.com/skyframe/go-invoice-generator/compare/v0.3.2...v0.3.3) (2024-11-01)
+
+
+### Bug Fixes
+
+* Fixed the discount amount ([527d6db](https://github.com/skyframe/go-invoice-generator/commit/527d6db34f7a90c0c5d29402b6d63556964d7bf9))
+
 ## [0.3.2](https://github.com/skyframe/go-invoice-generator/compare/v0.3.1...v0.3.2) (2024-08-04)
 
 
