@@ -1,10 +1,12 @@
 package generator
 
 import (
+	"bytes"
 	"fmt"
 	"time"
 
 	"github.com/go-pdf/fpdf"
+	"github.com/shopspring/decimal"
 )
 
 // Build pdf document from data provided
@@ -369,27 +371,6 @@ func (doc *Document) appendTotal() {
 		// 	doc.Options.GreyTextColor[2],
 		// )
 
-		// var descString bytes.Buffer
-		// discountType, discountAmount := doc.Discount.getDiscount()
-		// if discountType == DiscountTypePercent {
-		// 	descString.WriteString("-")
-		// 	descString.WriteString(discountAmount.String())
-		// 	descString.WriteString(" % / -")
-		// 	descString.WriteString(doc.ac.FormatMoneyDecimal(
-		// 		doc.TotalWithoutTaxAndWithoutDocumentDiscount().Sub(doc.TotalWithoutTax())),
-		// 	)
-		// } else {
-		// 	descString.WriteString("-")
-		// 	descString.WriteString(doc.ac.FormatMoneyDecimal(discountAmount))
-		// 	descString.WriteString(" / -")
-		// 	descString.WriteString(
-		// 		discountAmount.Mul(decimal.NewFromFloat(100)).Div(doc.TotalWithoutTaxAndWithoutDocumentDiscount()).StringFixed(2),
-		// 	)
-		// 	descString.WriteString(" %")
-		// }
-
-		// doc.pdf.CellFormat(38, 7.5, doc.encodeString(descString.String()), "0", 0, "TR", false, 0, "")
-
 		doc.pdf.SetFont(doc.Options.Font, "", LargeTextFontSize)
 		doc.pdf.SetTextColor(
 			doc.Options.BaseTextColor[0],
@@ -397,15 +378,38 @@ func (doc *Document) appendTotal() {
 			doc.Options.BaseTextColor[2],
 		)
 
+		var descString bytes.Buffer
+		discountType, discountAmount := doc.Discount.getDiscount()
+
 		// Draw discount amount
 		doc.pdf.SetY(baseY)
 		doc.pdf.SetX(162)
 		doc.pdf.SetFillColor(doc.Options.GreyBgColor[0], doc.Options.GreyBgColor[1], doc.Options.GreyBgColor[2])
 		doc.pdf.Rect(160, doc.pdf.GetY(), 40, 15, "F")
+		if discountType == DiscountTypePercent {
+			descString.WriteString("-")
+			descString.WriteString(discountAmount.String())
+			descString.WriteString(" % / -")
+			descString.WriteString(doc.ac.FormatMoneyDecimal(
+				doc.TotalWithoutTaxAndWithoutDocumentDiscount().Sub(doc.TotalWithoutTax())),
+			)
+		} else {
+			descString.WriteString("-")
+			descString.WriteString(doc.ac.FormatMoneyDecimal(discountAmount))
+			descString.WriteString(" / -")
+			descString.WriteString(
+				discountAmount.Mul(decimal.NewFromFloat(100)).Div(doc.TotalWithoutTaxAndWithoutDocumentDiscount()).StringFixed(2),
+			)
+			descString.WriteString(" %")
+		}
+
+		// doc.pdf.CellFormat(38, 7.5, doc.encodeString(descString.String()), "0", 0, "TR", false, 0, "")
+
 		doc.pdf.CellFormat(
 			40,
 			15,
-			doc.encodeString(doc.ac.FormatMoneyDecimal(doc.TotalWithoutTax())),
+			// doc.encodeString(doc.ac.FormatMoneyDecimal(doc.Discount._amount)),
+			doc.encodeString(doc.encodeString(descString.String())),
 			"0",
 			0,
 			"L",
